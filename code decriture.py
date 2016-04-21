@@ -150,7 +150,7 @@ def lecture():
     main() # retour au main
     
 
-#main, chois entre les différentes options
+#main, choix entre les différentes options
 def main():
     commande= input("Que voulez-vous faire (E: Écrire un fichier, L: Lire un fichier, S: arrêt du programme): ")
 
