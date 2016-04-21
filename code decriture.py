@@ -3,8 +3,8 @@ import sys
 
 
 def ecriture ():
-    nom_fichier = input("Entrer le nom que vous désirez donner au fichier : ")
-    nb_liste = (input("Entrer le nombre de variable à entrer dans le fichier : "))
+    nom_fichier = input("Entrer le nom que vous désirez donner au fichier : ") #nom attribué au fichier
+    nb_liste = (input("Entrer le nombre de variable à entrer dans le fichier : ")) #nombre de variable qui vont être écrite
 
     if not nb_liste.isdigit():
         print("Il y a une erreur, veuillez entrez un nombre entier")
@@ -17,7 +17,8 @@ def ecriture ():
         if not nb_donnee.isdigit():
             print("Il y a une erreur, veuillez entrez un nombre")
             nb_donnee = int(input("Entrer le nombre de données à entrer :"))
-
+        
+        #Nom des variables
         nom1 = input("Entrer le nom de la première variable :")
         nom2 = input("Entrer le nom de la seconde variable :")
 
@@ -28,7 +29,7 @@ def ecriture ():
         liste2 = []
         liste3 = []
        
-    
+        #Écriture des noms dans le fichier
         fd=open(nom_fichier , "w")
         fd.write(str(nom1) + "         ")
         fd.write(str(nom2) + "         ")
@@ -44,7 +45,7 @@ def ecriture ():
         nb2 = 0
         nb3 = 0
         
-        
+        #Entrées des données ainsi que leur écriture dans le fichier
         while nb < int(nb_donnee):
             donnee1 = (input("Entrer la prochaine valeur de la variable" +" "+ nom1 + ": "))
             if not donnee1.isdigit():
@@ -60,7 +61,8 @@ def ecriture ():
                 donnee2 = (input("Entrer la prochaine valeur de la variable" +" "+ nom2 + ": "))  
             liste2.append(float(donnee2))
             nb2+=1
-
+        
+        #Nous avons un minimum de 2 variables. Donc pour 2 ou 3 variables le programme reste très conviviale
         if int(nb_liste)>2 and int(nb_liste) == 3:
             while nb3 < int(nb_donnee):
                 donnee3 = (input("Entrer la prochaine valeur de la variable" + " " + nom3 + ": "))
@@ -69,7 +71,8 @@ def ecriture ():
                     donnee3 = (input("Entrer la prochaine valeur de la variable" +" "+ nom3 + ": "))  
                 liste3.append(float(donnee3))
                 nb3+=1
-
+        
+        #Écriture des données dans le fichiers
         if int(nb_liste) == 3:
             for i in range (int(nb_donnee)):
                 fd.write(str(liste1[i]) + "         " + str(liste2[i]) +  "         " + str(liste3[i]) +  "\n")
@@ -88,10 +91,10 @@ def ecriture ():
         print ("Votre est enregistre sous le nom <<" + nom_fichier + ">>  dans le même répertoir qu'où le code se situe")
 
 
-
+    #Écriture du fichier avec plus de 3 variables différentes
     if int(nb_liste) > 3 :
-    
-        nb_donnee_n = (input("Entrer le nombre de données à entrer :"))
+        #nombre de données à entrer par variable
+        nb_donnee_n = (input("Entrer le nombre de données à entrer :")) #nobre de données pour chaque variable
         if not nb_donnee_n.isdigit():
             print("Il y a une erreur, veuillez entrez un nombre")
             nb_donnee_n = (input("Entrer le nombre de données à entrer :"))
@@ -104,9 +107,9 @@ def ecriture ():
     
         while nb_titre < int(nb_liste):
             nom_n = input("Entrer le nom de la nième variable :")
-            liste_nom.append(nom_n)
+            liste_nom.append(nom_n) #Mise en mémoire des noms des variables
             nb_titre += 1
-        
+        #Écriture des noms des variables dans le fichier        
         for i in range (int(nb_liste)):
             fd.write(str(liste_nom[i]) + "         ")
 
@@ -133,9 +136,9 @@ def ecriture ():
     fd.close()
     print ("Le document" +" " + nom_fichier + " est enregistre sous le nom <<" + nom_fichier + ">>  dans le même répertoir qu'où le code se situe")
 
-    main()
+    main() #retour au main
 
-
+#Lecture d'une fichier
 def lecture():
     nom_doc = input("Entrez le nom complet (avec l'extension) du ficihier que vous voulez lire :")
     gd = open(nom_doc, 'r')
@@ -144,10 +147,10 @@ def lecture():
     
     gd.close()
 
-    main()
+    main() # retour au main
     
 
-#main
+#main, chois entre les différentes options
 def main():
     commande= input("Que voulez-vous faire (E: Écrire un fichier, L: Lire un fichier, S: arrêt du programme): ")
 
