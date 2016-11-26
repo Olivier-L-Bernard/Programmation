@@ -189,7 +189,8 @@ def graphique():
   
     saut= input("Combien de ligne désirez vous sauter (combien de ligne ne sont pas des données) :")
     var =np.loadtxt(nom_doc,skiprows= int(saut) ,unpack=True)
-      
+    
+    erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
     except ValueError:
@@ -201,14 +202,26 @@ def graphique():
     except ValueError:
          print("Il y a une erreur, veuillez entrer le numéros de la variable")
          y = int(input("Entrez le numéros de la colonne qui sera la composante Y du graphique :"))
-
+           
+    if (erreury == 'O' or erreury == 'o' ) :
+                try:
+                    yer = int(input("Entrez le No de la colonne qui sera l'erreur sur Y du graphique :"))
+                except ValueError:
+                    print("Il y a une erreur, veuillez entrer le numéros de la variable")
+                    yer = int(input("Entrez le No de la colonne qui sera l'erreur sur Y du graphique :")) 
+                varyer = var[yer-1]
+                      
     varx = var[x-1]
     vary = var[y-1]
     axe_x = input("Entrer le titre de l'axe des x :")
     axe_y = input("Entrer le titre de l'axe des y :")
     
-    
-    plt.plot(varx, vary)
+    if (erreury == 'O' or erreury == 'o' ) :
+                plt.errorbar(varx, vary,fmt='ko', yerr= varyer)
+                plt.plot(varx, vary, 'sk')
+    else:
+           plt.plot(varx, vary)
+           
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
        
