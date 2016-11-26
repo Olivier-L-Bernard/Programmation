@@ -234,8 +234,10 @@ def graphique():
     if (erreury == 'O' and erreurx == 'O' or erreury == 'o' and erreurx == 'o' ) :
                 plt.errorbar(varx, vary,fmt='ko',xerr= varxer, yerr= varyer)
                 plt.plot(varx, vary, 'sk')
-    else:
-           plt.plot(varx, vary)
+           
+    if (erreury == 'N' and erreurx == 'N' or erreury == 'n' and erreurx == 'n'):
+                plt.plot(varx, vary, 'sk')
+                plt.legend()
            
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
