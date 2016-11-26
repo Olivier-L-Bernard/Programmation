@@ -2,14 +2,11 @@
 '''
 Auteur: Olivier Bernard
 Date : 26 avril 2016
-
 Entree: Clavier
 Sortie: Moniteur
-
 Programme: Programmepour ecrire des fichiers
            Programme pour lire des fichiers
            Programme pour tracer un graphique avec deux variables
-
 '''
 
 import numpy as np
@@ -191,6 +188,8 @@ def graphique():
     var =np.loadtxt(nom_doc,skiprows= int(saut) ,unpack=True)
     
     erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
+    erreurx = input("Y a t il une erreur en X sur le graphique (O: oui, N:non): ")
+    
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
     except ValueError:
@@ -210,6 +209,14 @@ def graphique():
                     print("Il y a une erreur, veuillez entrer le numéros de la variable")
                     yer = int(input("Entrez le No de la colonne qui sera l'erreur sur Y du graphique :")) 
                 varyer = var[yer-1]
+                
+    if (erreurx == 'O' or erreurx == 'o' ) :
+                try:
+                    xer = int(input("Entrez le No de la colonne qui sera l'erreur sur X du graphique :"))
+                except ValueError:
+                    print("Il y a une erreur, veuillez entrer le numéros de la variable")
+                    xer = int(input("Entrez le No de la colonne qui sera l'erreur sur X du graphique :")) 
+                varxer = var[xer-1]
                       
     varx = var[x-1]
     vary = var[y-1]
@@ -219,14 +226,22 @@ def graphique():
     if (erreury == 'O' or erreury == 'o' ) :
                 plt.errorbar(varx, vary,fmt='ko', yerr= varyer)
                 plt.plot(varx, vary, 'sk')
+                
+    if (erreurx == 'O' or erreurx == 'o' ) :
+                plt.errorbar(varx, vary,fmt='ko', xerr= varxer)
+                plt.plot(varx, vary, 'sk')
+                
+    if (erreury == 'O' and erreurx == 'O' or erreury == 'o' and erreurx == 'o' ) :
+                plt.errorbar(varx, vary,fmt='ko',xerr= varxer, yerr= varyer)
+                plt.plot(varx, vary, 'sk')
     else:
            plt.plot(varx, vary)
            
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
        
-    nom_graph = input ("Entrer le nom du graphique :")
-    plt.savefig(nom_graph+'.png')
+    #nom_graph = input ("Entrer le nom du graphique :")
+    #plt.savefig(nom_graph+'.png')
     plt.show()
 
     main() # retour au main    
@@ -255,4 +270,4 @@ def main():
         
 
 if __name__ == '__main__':
-  main()   
+  main() 
