@@ -189,6 +189,7 @@ def graphique():
     
     erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
     erreurx = input("Y a t il une erreur en X sur le graphique (O: oui, N:non): ")
+    regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
     
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
@@ -223,25 +224,40 @@ def graphique():
     axe_x = input("Entrer le titre de l'axe des x :")
     axe_y = input("Entrer le titre de l'axe des y :")
     
+    def F(x,a,b):
+        return a*x+b
+        
+    if (regression == 'O' or regression == 'o' ):
+        print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+        params0 = [1.0, 0.0]
+        [a,b] , pcov = curve_fit(F, varx, vary, params0, varyer)
+        Y = F(varx,a,b)
+        print('a:',a,'b:',b)
+        print('Y:', Y)
+        
+        
     if (erreury == 'O' or erreury == 'o' ) :
                 plt.errorbar(varx, vary,fmt='ko', yerr= varyer)
-                plt.plot(varx, vary, 'sk')
+                plt.plot(varx, vary, 'sk', label = 'Points')
+                plt.legend()
                 
     if (erreurx == 'O' or erreurx == 'o' ) :
                 plt.errorbar(varx, vary,fmt='ko', xerr= varxer)
-                plt.plot(varx, vary, 'sk')
+                plt.plot(varx, vary, 'sk' , label = 'Points')
+                plt.legend()
                 
     if (erreury == 'O' and erreurx == 'O' or erreury == 'o' and erreurx == 'o' ) :
                 plt.errorbar(varx, vary,fmt='ko',xerr= varxer, yerr= varyer)
-                plt.plot(varx, vary, 'sk')
-           
+                plt.plot(varx, vary, 'sk' , label = 'Points')
+                
     if (erreury == 'N' and erreurx == 'N' or erreury == 'n' and erreurx == 'n'):
-                plt.plot(varx, vary, 'sk')
+                plt.plot(varx, vary, 'sk' , label = 'Points')
                 plt.legend()
-           
+ 
+    plt.plot(varx ,Y, '--', label='Lissage')          
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
-       
+    plt.legend(loc=4)
     #nom_graph = input ("Entrer le nom du graphique :")
     #plt.savefig(nom_graph+'.png')
     plt.show()
