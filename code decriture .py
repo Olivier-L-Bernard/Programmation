@@ -257,9 +257,9 @@ def graphique():
     plt.plot(varx ,Y, '--', label='Lissage')          
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
-    plt.legend(loc=4)
-    #nom_graph = input ("Entrer le nom du graphique :")
-    #plt.savefig(nom_graph+'.png')
+    plt.legend(loc=4, numpoints= 1)
+    nom_graph = input ("Entrer le nom du graphique :")
+    plt.savefig(nom_graph+'.png')
     plt.show()
 
     main() # retour au main    
