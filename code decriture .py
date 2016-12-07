@@ -279,11 +279,10 @@ def graphique():
     plt.legend( loc='best', numpoints= 1, frameon = False)
     plt.xlim(xminimum, xmaximum)
     plt.ylim(yminimum, ymaximum)
-    plt.show()
-    
-    nom_graph = input ("Entrer le nom du graphique :")
+           nom_graph = input ("Entrer le nom du graphique :")
     plt.savefig(nom_graph+'.png')
-
+    plt.show()
+   
     main() # retour au main    
     
 #main, choix entre les différentes options
