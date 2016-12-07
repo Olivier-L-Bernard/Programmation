@@ -189,7 +189,9 @@ def graphique():
     
     erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
     erreurx = input("Y a t il une erreur en X sur le graphique (O: oui, N:non): ")
-    regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
+    
+    if (erreury == 'O' or erreury == 'o'):
+        regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
     
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
@@ -227,44 +229,63 @@ def graphique():
     def F(x,a,b):
         return a*x+b
         
-    if (regression == 'O' or regression == 'o' ):
+    if (regression == 'O' or regression == 'o' and erreurx == 'N' or erreurx == 'n' ):
         print ("x maximum : ", max(varx), 'x minimum:', min(varx))
         params0 = [1.0, 0.0]
         [a,b] , pcov = curve_fit(F, varx, vary, params0, varyer)
         Y = F(varx,a,b)
-        print('a:',a,'b:',b)
-        print('Y:', Y)
+        Erreur = np.sqrt(np.diag(pcov))/2
+        print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+        #print('Y:', Y)
         
+    if (regression == 'O' or regression == 'o' and erreurx == 'o' or erreurx == 'O' ):
+        print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+        params0 = [1.0, 0.0]
+        [a,b] , pcov = curve_fit(F, varx, vary, params0, varyer, varxer.all)
+        Y = F(varx,a,b)
+        Erreur = np.sqrt(np.diag(pcov))/2
+        print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+        #print('Y:', Y)
         
-    if (erreury == 'O' or erreury == 'o' ) :
-                plt.errorbar(varx, vary,fmt='ko', yerr= varyer)
-                plt.plot(varx, vary, 'sk', label = 'Points')
+    if (erreury == 'O' or erreury == 'o' and erreurx == 'N' or erreurx == 'n' ) :
+                plt.errorbar(varx, vary,fmt='k', yerr= varyer)
                 plt.legend()
                 
-    if (erreurx == 'O' or erreurx == 'o' ) :
-                plt.errorbar(varx, vary,fmt='ko', xerr= varxer)
-                plt.plot(varx, vary, 'sk' , label = 'Points')
+    if (erreurx == 'O' or erreurx == 'o' and erreury == 'N' or erreury == 'n') :
+                plt.errorbar(varx, vary,fmt='k', xerr= varxer)
                 plt.legend()
                 
     if (erreury == 'O' and erreurx == 'O' or erreury == 'o' and erreurx == 'o' ) :
-                plt.errorbar(varx, vary,fmt='ko',xerr= varxer, yerr= varyer)
-                plt.plot(varx, vary, 'sk' , label = 'Points')
+                plt.errorbar(varx, vary,fmt='k',xerr= varxer, yerr= varyer)
                 
-    if (erreury == 'N' and erreurx == 'N' or erreury == 'n' and erreurx == 'n'):
-                plt.plot(varx, vary, 'sk' , label = 'Points')
-                plt.legend()
- 
-    plt.plot(varx ,Y, '--', label='Lissage')          
+    ajoutx = (max(varx)-min(varx))/12
+    xmaximum = max(varx) + ajoutx
+    xminimum = min(varx) - ajoutx
+    
+    ajouty = (max(vary) - min(vary))/12
+    ymaximum = max(vary) + ajouty
+    yminimum = min(vary) - ajouty
+    
+    print(xmaximum, xminimum, ymaximum, yminimum)
+    #print('Y:', Y)
+       
+    nomexp = input("Entrez ce que sont ces points :")
+    nomlissage = input("Entrez léquation du lissage:")
+      
+    plt.plot(varx, vary , 'sk'  ,markersize=3, label = nomexp)
+    plt.plot(varx ,Y, '--', label= nomlissage)         
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
-    plt.legend(loc=4, numpoints= 1)
+    plt.legend( loc='best', numpoints= 1, frameon = False)
+    plt.xlim(xminimum, xmaximum)
+    plt.ylim(yminimum, ymaximum)
+    plt.show()
+    
     nom_graph = input ("Entrer le nom du graphique :")
     plt.savefig(nom_graph+'.png')
-    plt.show()
 
     main() # retour au main    
     
-
 #main, choix entre les différentes options
 def main():
     commande= input("Que voulez-vous faire (E: Ecrire un fichier, L: Lire un fichier, G: tracer de graphique, S: arret du programme): ")
@@ -288,4 +309,5 @@ def main():
         
 
 if __name__ == '__main__':
-  main() 
+  main()   
+
