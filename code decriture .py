@@ -190,8 +190,8 @@ def graphique():
     erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
     erreurx = input("Y a t il une erreur en X sur le graphique (O: oui, N:non): ")
     
-    if (erreury == 'O' or erreury == 'o'):
-        regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
+    
+    regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
     
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
@@ -229,35 +229,71 @@ def graphique():
     def F(x,a,b):
         return a*x+b
         
-    if (regression == 'O' or regression == 'o' and erreurx == 'N' or erreurx == 'n' ):
-        print ("x maximum : ", max(varx), 'x minimum:', min(varx))
-        params0 = [1.0, 0.0]
-        [a,b] , pcov = curve_fit(F, varx, vary, params0, varyer)
-        Y = F(varx,a,b)
-        Erreur = np.sqrt(np.diag(pcov))/2
-        print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
-        #print('Y:', Y)
+    if (regression == 'O' or regression == 'o'  ):
         
-    if (regression == 'O' or regression == 'o' and erreurx == 'o' or erreurx == 'O' ):
-        print ("x maximum : ", max(varx), 'x minimum:', min(varx))
-        params0 = [1.0, 0.0]
-        [a,b] , pcov = curve_fit(F, varx, vary, params0, varyer, varxer.all)
-        Y = F(varx,a,b)
-        Erreur = np.sqrt(np.diag(pcov))/2
-        print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
-        #print('Y:', Y)
+        if (erreurx == 'N' and erreury == 'o' or erreurx == 'N' and erreury == 'O' or erreurx == 'n' and erreury == 'o' or erreurx == 'n' and erreury == 'O'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0, varyer)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b') 
+            plt.annotate('a = (611.8E -5 ± 5E -6) mA' ,xy = (-25,2.4), xytext=(-25,2.4))
+            plt.annotate('b = (14.37E -3 ± 1E -3) mT' ,xy = (-25,2.1), xytext=(-25,2.1))
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+            #print('Y:', Y)
         
-    if (erreury == 'O' or erreury == 'o' and erreurx == 'N' or erreurx == 'n' ) :
-                plt.errorbar(varx, vary,fmt='k', yerr= varyer)
+        if  (erreurx == 'O' and erreury == 'o' or erreurx == 'O' and erreury == 'O' or erreurx == 'o' and erreury == 'o' or erreurx == 'o' and erreury == 'O'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0, varyer, varxer.all)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b') 
+            plt.annotate('a = (2343.185 ± 2) V/A' ,xy = (0,450), xytext=(0,450))
+            plt.annotate('b = (25.393 ± 0.329) V' ,xy = (0,400), xytext=(0,400))
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+            #print('Y:', Y)
+            
+        if  (erreurx == 'N' and erreury == 'n' or erreurx == 'N' and erreury == 'N' or erreurx == 'n' and erreury == 'n' or erreurx == 'n' and erreury == 'N'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b') 
+            plt.annotate('a = (2343.185 ± 2) V/A' ,xy = (0,450), xytext=(0,450))
+            plt.annotate('b = (25.393 ± 0.329) V' ,xy = (0,400), xytext=(0,400))
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+            
+    if (erreurx == 'N' and erreury == 'o' or erreurx == 'N' and erreury == 'O' or erreurx == 'n' and erreury == 'o' or erreurx == 'n' and erreury == 'O') :
+                plt.errorbar(varx, vary,fmt='ko', markersize=0, yerr= varyer)
+                plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
+                
+    if (erreurx == 'O' and erreury == 'n' or erreurx == 'O' and erreury == 'N' or erreurx == 'o' and erreury == 'n' or erreurx == 'o' and erreury == 'N') :
+                plt.errorbar(varx, vary,fmt='ko',markersize=0, xerr= varxer)
+                plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
+                
+    if (erreurx == 'O' and erreury == 'o' or erreurx == 'o' and erreury == 'O' or erreurx == 'o' and erreury == 'o' or erreurx == 'O' and erreury == 'O') :
+                plt.errorbar(varx, vary,fmt='ko', markersize=0, xerr= varxer, yerr= varyer)
+                plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
+                
+    if (erreurx == 'N' and erreury == 'n' or erreurx == 'N' and erreury == 'N' or erreurx == 'n' and erreury == 'n' or erreurx == 'n' and erreury == 'N'):
+                plt.plot(varx, vary, 'sk' , label = 'Points expérimentaux')
                 plt.legend()
-                
-    if (erreurx == 'O' or erreurx == 'o' and erreury == 'N' or erreury == 'n') :
-                plt.errorbar(varx, vary,fmt='k', xerr= varxer)
-                plt.legend()
-                
-    if (erreury == 'O' and erreurx == 'O' or erreury == 'o' and erreurx == 'o' ) :
-                plt.errorbar(varx, vary,fmt='k',xerr= varxer, yerr= varyer)
-                
+            
     ajoutx = (max(varx)-min(varx))/12
     xmaximum = max(varx) + ajoutx
     xminimum = min(varx) - ajoutx
@@ -265,24 +301,18 @@ def graphique():
     ajouty = (max(vary) - min(vary))/12
     ymaximum = max(vary) + ajouty
     yminimum = min(vary) - ajouty
-    
-    print(xmaximum, xminimum, ymaximum, yminimum)
-    #print('Y:', Y)
-       
-    nomexp = input("Entrez ce que sont ces points :")
-    nomlissage = input("Entrez léquation du lissage:")
-      
-    plt.plot(varx, vary , 'sk'  ,markersize=3, label = nomexp)
-    plt.plot(varx ,Y, '--', label= nomlissage)         
+                
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
     plt.legend( loc='best', numpoints= 1, frameon = False)
+    plt.annotate('Pente = -2261.6 K', xy=(0.00175,14.5), xytext=(0.00175,14.3))
+    plt.annotate('Ord. à origine = 15.1159', xy=(0.00175,14), xytext=(0.00175,13.8))
     plt.xlim(xminimum, xmaximum)
     plt.ylim(yminimum, ymaximum)
-           nom_graph = input ("Entrer le nom du graphique :")
-    plt.savefig(nom_graph+'.png')
+    nom_graph = input ("Entrer le nom du graphique :")
+    plt.savefig(nom_graph+'.pdf')
     plt.show()
-   
+    
     main() # retour au main    
     
 #main, choix entre les différentes options
@@ -308,5 +338,5 @@ def main():
         
 
 if __name__ == '__main__':
-  main()   
+  main()  
 
