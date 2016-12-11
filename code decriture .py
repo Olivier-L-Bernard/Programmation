@@ -305,8 +305,6 @@ def graphique():
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
     plt.legend( loc='best', numpoints= 1, frameon = False)
-    plt.annotate('Pente = -2261.6 K', xy=(0.00175,14.5), xytext=(0.00175,14.3))
-    plt.annotate('Ord. à origine = 15.1159', xy=(0.00175,14), xytext=(0.00175,13.8))
     plt.xlim(xminimum, xmaximum)
     plt.ylim(yminimum, ymaximum)
     nom_graph = input ("Entrer le nom du graphique :")
