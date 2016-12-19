@@ -23,7 +23,7 @@ def calcul2(e_m,Vp):
     B0 = 0.25*M
     E0 = Vp/r
     
-    v0 = np.sqrt(2*e_m * -179.266) #Utilisation du courant d'accélération de -179.9V
+    v0 = np.sqrt(2*e_m * -179.9) #Utilisation du courant d'accélération de -179.9V
     p0 = E0 / B0   
     
     return (v0/p0)
@@ -41,16 +41,28 @@ def calcul(e_m, Vp):
     v0 = np.sqrt(2*e_m * -179.9) #Utilisation du courant d'accélération de -179.9V
     p0 = E0 / B0
  
-    x = -1.70*10*11
-    resu = []
-    for x in e_m :
-        result = -(np.tan((np.sqrt(2*x * -179.9)- x*B0*r)/p0))  + (np.sqrt(2*x* -179.9)/p0)
-        if result > -4.23527907883810*10**(-1000): #Condition pour trouver où les fonction se croisent
-            if x < -1.7*10**11 and x > -1.9*10**11: #rejet des points trop bas ou trop hauts
-                resu.append(x) #Prise en note de chacun des point en x qui respèctent la conditions
-        if x < -1.78*10**11:
-            break
-        x += -(1.9*10**11-1.7*10**11)/1000 
+    #x = -1.70*10*11
+    if Vp >= -30:
+        resu = []
+        for x in e_m :
+            result = -(np.tan((np.sqrt(2*x * -179.9)- x*B0*r)/p0))  + (np.sqrt(2*x* -179.9)/p0)
+            if result > -4.23527907883810*10**(-1000): #Condition pour trouver où les fonction se croisent
+                if x < -1.7*10**11 and x > -1.85*10**11: #rejet des points trop bas ou trop hauts
+                    resu.append(x) #Prise en note de chacun des point en x qui respèctent la conditions
+                if x < -1.78*10**11:
+                    break
+        x += -(1.9*10**11-1.7*10**11)/1000
+        
+    if Vp < -30:
+        resu = []
+        for x in e_m :
+            result = -(np.tan((np.sqrt(2*x * -179.9)- x*B0*r)/p0))  + (np.sqrt(2*x* -179.9)/p0)
+            if result > -4.23527907883810*10**(-1000): #Condition pour trouver où les fonction se croisent
+                if x > -1.9*10**11: #rejet des points trop bas ou trop hauts
+                    resu.append(x) #Prise en note de chacun des point en x qui respèctent la conditions
+                if x < -1.78*10**11:
+                    break
+        x += -(1.9*10**11-1.7*10**11)/1000
 
     x0 = sum(resu)/len(resu)
     print("Le point en x où les courbes se croisent :" ,x0)
@@ -80,15 +92,15 @@ def graphique():
     plt.ylabel(r'$tan (\frac{v_{o} - \omega r}{\rho_{o}})$')
     plt.legend( loc='best', numpoints= 1, frameon = False)
 
-    plt.xlim(-1.85*10**11, -1.6*10**11)
+    #plt.xlim(-1.85*10**11, -1.6*10**11)
     if max(Y) > 200:
         plt.ylim(-200, 200)
 
     if max(Y) < 100:
         plt.ylim(-1.5*max(Y), max(Y))
             
-    nom_graph = input ("Entrer le nom du graphique :")
-    plt.savefig(nom_graph+'.pdf')
+    #nom_graph = input ("Entrer le nom du graphique :")
+    #plt.savefig(nom_graph+'.pdf')
     plt.gca().invert_xaxis()
     plt.gca().invert_yaxis()
     plt.show()
@@ -106,3 +118,4 @@ def main():
         
 if __name__ == '__main__':
   main() 
+
