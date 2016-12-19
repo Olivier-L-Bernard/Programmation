@@ -1,0 +1,101 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  9 17:44:55 2016
+
+@author: bero2203
+"""
+
+import numpy as np
+from scipy.optimize import curve_fit
+from matplotlib import pyplot as plt
+import sys
+import unicodedata
+
+
+def calcul(Vp,Vacc):
+    #masse= input("Entrer la masse de l'électron :")
+    #masse= 9.109*10^(-31)
+    
+    #charge= input("Entrer la charge de l'électron :")
+    #charge= -1.6021765*10^(-19)
+    
+    e_m = -1.755882015*(10**11)   
+    
+    #M= input("Entrer la pente M :")
+    M= 0.00612 
+    
+    r = 0.027715
+    dist = 2*r
+    
+    B0 = 0.25*M
+    E0 = Vp/dist
+    
+    v0 = np.sqrt(2*e_m * Vacc)
+    p0 = E0 / B0
+    
+    print(np.arctan(v0/p0))    
+    
+    return np.arctan(v0/p0)
+    
+def graphique():
+
+    nom_doc = input("Entrez le nom complet (avec l'extension) du fichier dont vous voulez faire un graphique :")
+
+    gd = open(nom_doc, 'r')
+    print(gd.read())
+    gd.close()
+  
+    saut= input("Combien de ligne désirez vous sauter (combien de ligne ne sont pas des données) :")
+    var =np.loadtxt(nom_doc,skiprows= int(saut) ,unpack=True)
+        
+    try:
+         x = int(input("Entrez le numéros de la colonne qui est le potentiel de la plaque :"))
+    except ValueError:
+         print("Il y a une erreur, veuillez le numéros de la variable")
+         x = int(input("Entrez le numéros de la colonne qui est le potentiel de la plaque :"))
+    try:
+         y = int(input("Entrez le numéros de la colonne qui est le potentiel d'accélération :"))
+    except ValueError:
+         print("Il y a une erreur, veuillez entrer le numéros de la variable")
+         y = int(input("Entrez le numéros de la colonne qui est le potentiel d'accélération :"))
+
+                      
+    varx = var[x-1]
+    vary = var[y-1]
+    #axe_x = input("Entrer le titre de l'axe des x :")
+    #axe_y = input("Entrer le titre de l'axe des y :")
+    
+    r = 0.027715
+    dist = r  
+    
+    plt.plot(varx/dist , calcul(varx, vary), 'sk' ,markersize=3)
+            
+    ajoutx = (max(varx)/dist-min(varx)/dist)/12
+    xmaximum = max(varx)/dist + ajoutx
+    xminimum = min(varx)/dist - ajoutx
+                   
+    plt.xlabel(r'$E_{o}$ (V/m)')
+    plt.ylabel(r'$arctan (v_{o}/ \rho_{o})$')
+    plt.legend( loc='best', numpoints= 1, frameon = False)
+    plt.xlim(xminimum, xmaximum)
+    plt.gca().invert_xaxis()
+    plt.gca().invert_yaxis()
+    plt.ylim(-1.43,-1.58)
+    plt.annotate(r'$-\frac{\pi}{2}$ ' ,xy = (-70,-1.56), xytext=(-70,-1.57))
+    #nom_graph = input ("Entrer le nom du graphique :")
+    #plt.savefig(nom_graph+'.pdf')
+    plt.show()
+    
+    main() # retour au main
+    
+def main():
+    commande= input("Que voulez-vous faire (G: tracer de graphique, S: arret du programme): ")
+
+    if (commande == 'G' or commande == 'g' ):
+        graphique()
+
+    if (commande == 'S' or commande == 's'):
+        sys.exit()
+        
+if __name__ == '__main__':
+  main() 
