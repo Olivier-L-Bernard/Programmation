@@ -23,25 +23,25 @@ def ecriture ():
     except ValueError:
         print("Il y a une erreur, veuillez entrez un nombre entier")
         nb_liste = int(input("Entrer le nombre de variable à entrer dans le fichier: "))
-   
+
     if int(nb_liste) <= 3 :
         try:
             nb_donnee = int(input("Entrer le nombre de donnees à entrer :"))
         except ValueError:
             print("Il y a une erreur, veuillez entrez un nombre entier")
             nb_donnee = int(input("Entrer le nombre de donnees à entrer :"))
-        
+
         #Nom des variables
         nom1 = input("Entrer le nom de la première variable :")
         nom2 = input("Entrer le nom de la seconde variable :")
 
         if int(nb_liste) == 3:
             nom3 = input("Entrer le nom de la troisième variable :")
-        
+
         liste1 = []
         liste2 = []
         liste3 = []
-       
+
         #ecriture des noms dans le fichier
         fd=open(nom_fichier , "w")
         fd.write(str(nom1) + "         " + str(nom2) )
@@ -49,34 +49,34 @@ def ecriture ():
 
         if int(nb_liste)>2 and int(nb_liste) == 3:
             fd.write(str(nom3) + "         ")
-     
+
         fd.write("\n")
- 
+
         nb = 0
         nb2 = 0
         nb3 = 0
-        
+
         #Entrees des données ainsi que leur écriture dans le fichier
         while nb < int(nb_donnee):
             try:
-                donnee1 = float(input("Entrer la prochaine valeur de la variable" +" "+ nom1 + ": "))
+                donnee1 = (input("Entrer la prochaine valeur de la variable" +" "+ nom1 + ": "))
             except ValueError:
                 print("Il y a une erreur, veuillez entrez un nombre")
                 donnee1 = float(input("Entrer la prochaine valeur de la variable" +" "+ nom1 + ": "))
-                
-            liste1.append(float(donnee1))
+
+            liste1.append((donnee1))
             nb+=1
-        
+
         while nb2 < int(nb_donnee):
             try:
                 donnee2 = float(input("Entrer la prochaine valeur de la variable" +" " + nom2 + ": "))
             except ValueError:
                 print("Il y a une erreur, veuillez entrez un nombre")
                 donnee2 = float(input("Entrer la prochaine valeur de la variable" +" "+ nom2 + ": "))
-                
+
             liste2.append(float(donnee2))
             nb2+=1
-        
+
         #Nous avons un minimum de 2 variables. Donc pour 2 ou 3 variables le programme reste tres conviviale
         if int(nb_liste)>2 and int(nb_liste) == 3:
             while nb3 < int(nb_donnee):
@@ -85,10 +85,10 @@ def ecriture ():
                 except ValueError:
                     print("Il y a une erreur, veuillez entrez un nombre")
                     donnee3 = float(input("Entrer la prochaine valeur de la variable" +" "+ nom3 + ": "))
-                    
+
                 liste3.append(float(donnee3))
                 nb3+=1
-        
+
         #ecriture des données dans le fichiers
         if int(nb_liste) == 3:
             for i in range (int(nb_donnee)):
@@ -102,8 +102,8 @@ def ecriture ():
         print(nom2, liste2)
         if int(nb_liste) == 3:
             print(nom3, liste3)
-            
-                
+
+
         fd.close()
         print ("Votre est enregistre sous le nom <<" + nom_fichier + ">>  dans le même répertoir qu'où le code se situe")
 
@@ -120,35 +120,35 @@ def ecriture ():
         nb_titre = 0
         nb_3 = 0
         liste_nom = []
-        
+
         fd=open(nom_fichier , "w")
-    
+
         while nb_titre < int(nb_liste):
             nom_n = input("Entrer le nom de la nième variable :")
             liste_nom.append(nom_n) #Mise en mémoire des noms des variables
             nb_titre += 1
-        #Écriture des noms des variables dans le fichier        
+        #Écriture des noms des variables dans le fichier
         for i in range (int(nb_liste)):
             fd.write(str(liste_nom[i]) + "         ")
 
-        fd.write("\n")  
+        fd.write("\n")
 
         while nb_3 < int(nb_donnee_n):
- 
+
             nb_4=0
             i=0
-        
+
             while nb_4 < int(nb_liste):
                 try:
                     donnee_n = float(input("Entrer la prochaine valeur de la variable" + " " + liste_nom[i] + ": "))
                 except ValueError:
                     print("Il y a une erreur, veuillez entrez un nombre")
                     donnee_n = float(input("Entrer la prochaine valeur de la variable" + " " + liste_nom[i] + ": "))
-        
+
                 fd.write(str(float(donnee_n)) + "         ")
                 i +=1
                 nb_4 +=1
-            
+
             fd.write("\n" )
             nb_3 += 1
 
@@ -156,7 +156,7 @@ def ecriture ():
     print ("Le document" +" " + nom_fichier + " est enregistre sous le nom <<" + nom_fichier + ">>  dans le même répertoir qu'où le code se situe")
 
     main() #retour au main
-    
+
 
 #Lecture d'une fichier
 def lecture():
@@ -166,15 +166,15 @@ def lecture():
     gd = open(nom_doc, 'r')
     print(gd.read())
     gd.close()
-    
+
     graph = input("Voulez vous en faire une graphique (O: Oui, N: Non) :")
-    
+
     if graph == 'O' or graph == 'o':
         graphique()
 
     if graph == 'N' or graph == 'n':
         main() # retour au main
-        
+
 #Tracer de graphique
 def graphique():
 
@@ -183,13 +183,16 @@ def graphique():
     gd = open(nom_doc, 'r')
     print(gd.read())
     gd.close()
-  
-    saut= input("Combien de ligne désirez vous sauter (combien de ligne ne sont pas des données) :")
+
+    saut= 3
     var =np.loadtxt(nom_doc,skiprows= int(saut) ,unpack=True)
-    
-    erreury = input("Y a t il une erreur en Y sur le graphique (O: oui, N:non): ")
-    erreurx = input("Y a t il une erreur en X sur le graphique (O: oui, N:non): ")
-    
+
+    erreury = input("Y a t il une erreur en y (o=oui, n=non) :")
+    erreurx = input("Y a t il une erreur en x (o=oui, n=non) :")
+
+
+    regression = input("Voulez-vous faire une régression linéaire des points (O: oui, N:non): ")
+
     try:
          x = int(input("Entrez le numéros de la colonne qui sera la composante X du graphique :"))
     except ValueError:
@@ -201,7 +204,7 @@ def graphique():
     except ValueError:
          print("Il y a une erreur, veuillez entrer le numéros de la variable")
          y = int(input("Entrez le numéros de la colonne qui sera la composante Y du graphique :"))
-           
+         
     if (erreury == 'O' or erreury == 'o' ) :
                 try:
                     yer = int(input("Entrez le No de la colonne qui sera l'erreur sur Y du graphique :"))
@@ -217,48 +220,95 @@ def graphique():
                     print("Il y a une erreur, veuillez entrer le numéros de la variable")
                     xer = int(input("Entrez le No de la colonne qui sera l'erreur sur X du graphique :")) 
                 varxer = var[xer-1]
-                      
+
     varx = var[x-1]
     vary = var[y-1]
     axe_x = input("Entrer le titre de l'axe des x :")
     axe_y = input("Entrer le titre de l'axe des y :")
-    
+
+    def F(x,a,b):
+        return a*x+b
+
+    if (regression == 'O' or regression == 'o'  ):
+
+        if (erreurx == 'N' and erreury == 'o' or erreurx == 'N' and erreury == 'O' or erreurx == 'n' and erreury == 'o' or erreurx == 'n' and erreury == 'O'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0, varyer)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b')
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+
+
+        if  (erreurx == 'O' and erreury == 'o' or erreurx == 'O' and erreury == 'O' or erreurx == 'o' and erreury == 'o' or erreurx == 'o' and erreury == 'O'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0, varyer, varxer.all)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b')
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+
+        if  (erreurx == 'N' and erreury == 'n' or erreurx == 'N' and erreury == 'N' or erreurx == 'n' and erreury == 'n' or erreurx == 'n' and erreury == 'N'):
+            print ("x maximum : ", max(varx), 'x minimum:', min(varx))
+            params0 = [1.0, 0.0]
+            yini = int(input('Entrer la première valeur en y de la régression :'))
+            yfin = int(input('Entrer la dernière valeur en y de la régression :'))
+            xini = int(input('Entrer la première valeur en x de la régression :'))
+            xfin = int(input('Entrer la dernière valeur en x de la régression :'))
+            [a,b] , pcov = curve_fit(F, varx[xini-1:xfin-1], vary[yini-1:yfin-1], params0)
+            Y = F(varx,a,b)
+            plt.plot(varx ,Y, '--', label= 'ax + b')
+            Erreur = np.sqrt(np.diag(pcov))
+            print('Pente:[',a,']; Ordonné a origine: [',b,']; Erreur sur la pente:[',Erreur[0],'] ; Erreur sur ordonnée a origine:[',Erreur[1],']')
+
     if (erreurx == 'N' and erreury == 'o' or erreurx == 'N' and erreury == 'O' or erreurx == 'n' and erreury == 'o' or erreurx == 'n' and erreury == 'O') :
                 plt.errorbar(varx, vary,fmt='ko', markersize=0, yerr= varyer)
                 plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
-                
+
     if (erreurx == 'O' and erreury == 'n' or erreurx == 'O' and erreury == 'N' or erreurx == 'o' and erreury == 'n' or erreurx == 'o' and erreury == 'N') :
                 plt.errorbar(varx, vary,fmt='ko',markersize=0, xerr= varxer)
                 plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
-                
+
     if (erreurx == 'O' and erreury == 'o' or erreurx == 'o' and erreury == 'O' or erreurx == 'o' and erreury == 'o' or erreurx == 'O' and erreury == 'O') :
                 plt.errorbar(varx, vary,fmt='ko', markersize=0, xerr= varxer, yerr= varyer)
                 plt.plot(varx, vary , 'sk'  ,markersize=3, label = 'Points expérimentaux')
-                
+
     if (erreurx == 'N' and erreury == 'n' or erreurx == 'N' and erreury == 'N' or erreurx == 'n' and erreury == 'n' or erreurx == 'n' and erreury == 'N'):
-                plt.plot(varx, vary, 'sk' ,markersize=3)
-            
-    ajoutx = (max(varx)-min(varx))/12
+                plt.plot(varx, vary, 'b--' ,linewidth=0.3, label='Points expérimentaux')
+
+
+
+    
+    ajoutx = (max(varx)-min(varx))/20
     xmaximum = max(varx) + ajoutx
     xminimum = min(varx) - ajoutx
-    
-    ajouty = (max(vary) - min(vary))/12
+
+    ajouty = (max(vary) - min(vary))/20
     ymaximum = max(vary) + ajouty
-    yminimum = min(vary) - ajouty
-                
+    yminimum = min(varx) - ajouty
     plt.xlabel(axe_x)
     plt.ylabel(axe_y)
-    plt.legend( loc='best', numpoints= 1, frameon = False)
-    #plt.annotate('Pente = -2261.6 K', xy=(0.00175,14.5), xytext=(0.00175,14.3))
-    #plt.annotate('Ord. à origine = 15.1159', xy=(0.00175,14), xytext=(0.00175,13.8))
+    
+    plt.legend( loc='best',  frameon = False)
     plt.xlim(xminimum, xmaximum)
     plt.ylim(yminimum, ymaximum)
     nom_graph = input ("Entrer le nom du graphique :")
     plt.savefig(nom_graph+'.pdf')
     plt.show()
+    main()
     
-    main() # retour au main    
-    
+    main() # retour au main
+
 #main, choix entre les différentes options
 def main():
     commande= input("Que voulez-vous faire (E: Ecrire un fichier, L: Lire un fichier, G: tracer de graphique, S: arret du programme): ")
@@ -274,13 +324,13 @@ def main():
 
     if (commande == 'S' or commande == 's'):
         sys.exit()
-       
+
 
     if not commande == 'E' and commande == 'e' and commande == 'L' and commande == 'l':
         print("Veuillez choisir une des deux options de ce programme s'il-vous-plaît")
         commande= input("Que voulez-vous faire ? (E: Ecrire un fichier, L: Lire un fichier) :")
-        
+
 
 if __name__ == '__main__':
-  main()   
+  main()
 
