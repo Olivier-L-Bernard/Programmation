@@ -1,2 +1,2 @@
 # Programmation
-Projet decriture de fichier txt de plusieurs facons
+Quelques code python pour des situations plus spécifiques
