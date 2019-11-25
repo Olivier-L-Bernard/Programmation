@@ -1,0 +1,13 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+f  = open('data_file_005.txt', 'r')
+v = np.genfromtxt('data_file_005.txt', delimiter=',', skip_header = 1)
+f.close()
+
+plt.plot(v[:,1],v[:,5])
+plt.title('Voltage du thermomètre sur rotateur 20K PPMS (35K) 0oe pompé')
+plt.xlabel('Temps (s)')
+plt.ylabel('Voltage (V)')
+
+plt.show()
